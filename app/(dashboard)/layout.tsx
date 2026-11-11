@@ -14,8 +14,17 @@ export default function DashboardLayout({
   const [showAccountMenu, setShowAccountMenu] = useState(false);
 
   async function handleLogout() {
+    const loginTime = localStorage.getItem("dl_login_time");
+    let sessionDuration = "";
+    if (loginTime) {
+      const durationMs = Date.now() - parseInt(loginTime, 10);
+      const minutes = Math.floor(durationMs / 60000);
+      const seconds = Math.floor((durationMs % 60000) / 1000);
+      sessionDuration = `${minutes}m ${seconds}s`;
+    }
+    localStorage.removeItem("dl_login_time");
     await supabase.auth.signOut();
-    router.push("/login");
+    router.push(`/login?logged_out=1&session_duration=${encodeURIComponent(sessionDuration)}`);
   }
 
   return (
