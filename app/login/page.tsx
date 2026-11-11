@@ -13,6 +13,11 @@ export default function Login() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [error, setError] = useState("");
   const [sessionInfo, setSessionInfo] = useState<{ duration?: string; loggedOutAt?: string } | null>(null);
+  const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   // Signup modal state
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -304,7 +309,7 @@ export default function Login() {
         </form>
 
           <p className="mt-8 text-xs text-white/40 text-center">
-            Dental Lounge By HS Implant Studio &copy; {new Date().getFullYear()}
+            Dental Lounge By HS Implant Studio &copy; {currentYear}
           </p>
         </div>
       </div>
