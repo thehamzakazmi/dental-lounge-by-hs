@@ -13,7 +13,8 @@ export default function Login() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [error, setError] = useState("");
   const [sessionInfo, setSessionInfo] = useState<{ duration?: string; loggedOutAt?: string } | null>(null);
-  const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+  //const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+  const [currentYear, setCurrentYear] = useState<number>(2026);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
