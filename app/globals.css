@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.login-gradient {
+  background:
+    linear-gradient(120deg, rgba(2, 8, 23, 0.2), rgba(8, 47, 73, 0.35)),
+    radial-gradient(circle at 18% 20%, rgba(56, 189, 248, 0.9), transparent 32%),
+    radial-gradient(circle at 72% 78%, rgba(37, 99, 235, 0.95), transparent 38%),
+    radial-gradient(circle at 82% 15%, rgba(103, 232, 249, 0.55), transparent 24%),
+    #071426;
+}
+
+.login-gradient::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: repeating-linear-gradient(90deg, transparent 0, transparent 18px, rgba(255,255,255,.025) 19px, transparent 20px);
+  transform: rotate(-8deg);
+  animation: login-drift 18s ease-in-out infinite alternate;
+}
+
+.login-noise {
+  position: absolute;
+  inset: 0;
+  opacity: .15;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+}
+
+.login-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(24px);
+  opacity: .62;
+  animation: login-float 12s ease-in-out infinite alternate;
+}
+
+.login-orb-one {
+  width: 22rem;
+  height: 22rem;
+  left: 5%;
+  bottom: -8rem;
+  background: #22d3ee;
+}
+
+.login-orb-two {
+  width: 17rem;
+  height: 17rem;
+  right: 18%;
+  top: 8%;
+  background: #2563eb;
+  animation-delay: -5s;
+}
+
+@keyframes login-drift {
+  to { transform: translate3d(4%, 2%, 0) rotate(-5deg) scale(1.06); }
+}
+
+@keyframes login-float {
+  to { transform: translate3d(5%, -8%, 0) scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-gradient::before,
+  .login-orb {
+    animation: none;
+  }
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(*) {
+  animation-duration: 650ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(.route-exit) {
+  animation: route-turn-out 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left center;
+}
+
+::view-transition-new(.route-enter) {
+  animation: route-turn-in 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: right center;
+}
+
+@keyframes route-turn-out {
+  0% {
+    opacity: 1;
+    filter: brightness(1) blur(0);
+    transform: perspective(1600px) translate3d(0, 0, 0) rotateY(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(0.72) blur(2px);
+    transform: perspective(1600px) translate3d(-7%, 0, -180px) rotateY(18deg) scale(0.94);
+  }
+}
+
+@keyframes route-turn-in {
+  0% {
+    opacity: 0;
+    filter: brightness(0.72) blur(3px);
+    transform: perspective(1600px) translate3d(8%, 0, -220px) rotateY(-22deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1) blur(0);
+    transform: perspective(1600px) translate3d(0, 0, 0) rotateY(0deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+  }
+}
